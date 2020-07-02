@@ -7,11 +7,18 @@ export function activate(context: ExtensionContext) {
 			showPicker
 		};
 		const quickPick = window.createQuickPick();
-		quickPick.items = Object.keys(options).map(label => ({ label }));
+		quickPick.items = [
+			{label: "Browse"}
+		];
 		quickPick.onDidChangeSelection(selection => {
 			if (selection[0]) {
-				options[selection[0].label](context)
-					.catch(console.error);
+				switch(selection[0].label) {
+					case "Browse":
+						options["showPicker"](context);
+						break;
+					default:
+						break;
+				}
 			}
 		});
 		quickPick.onDidHide(() => quickPick.dispose());
